@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-blue-700 p-4 shadow-lg">
+    <nav className="bg-blue-700 p-6 shadow-lg">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="text-white text-3xl font-extrabold">
@@ -38,6 +38,9 @@ const Navbar: React.FC = () => {
 
         {/* Menu Links for larger screens */}
         <div className="hidden md:flex space-x-8 items-center">
+          <Link to="/" className="text-white hover:text-yellow-300">
+            Home
+          </Link>
           <Link to="/services" className="text-white hover:text-yellow-300">
             Services
           </Link>
@@ -84,6 +87,13 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden">
           <div className="flex flex-col space-y-4 mt-4">
+            <Link
+              to="/"
+              className="text-white hover:text-yellow-300"
+              onClick={toggleMenu}
+            >
+              Home
+            </Link>
             <Link
               to="/services"
               className="text-white hover:text-yellow-300"
