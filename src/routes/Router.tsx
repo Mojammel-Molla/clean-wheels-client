@@ -7,11 +7,13 @@ import ServicePage from '../pages/service/ServicePage';
 import BookingPage from '../pages/booking/BookingPage';
 import ContactPage from '../pages/contact/ContactPage';
 import ErrorPage from '../pages/error/ErrorPage';
+import MainLayout from '../components/layouts/MainLayout';
+import DashboardLayout from '../components/layouts/DashboardLayout';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -31,6 +33,12 @@ const router = createBrowserRouter([
         element: <ContactPage />,
       },
     ],
+  },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+
+    children: [],
   },
   {
     path: '/login',

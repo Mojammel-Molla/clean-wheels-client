@@ -9,8 +9,8 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-blue-700 p-6 shadow-lg">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+    <nav className="bg-blue-700 p-6 drop-shadow-2xl shadow-2xl ">
+      <div className="max-w-7xl mx-auto flex justify-between items-center ">
         {/* Logo */}
         <div className="text-white text-3xl font-extrabold">
           <Link to="/" className="flex items-center space-x-2">

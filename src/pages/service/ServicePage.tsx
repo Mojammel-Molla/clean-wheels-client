@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ServicePage: React.FC = () => {
-  return <div>This is service page</div>;
+  return <div className="min-h-screen">This is service page</div>;
 };
 
 export default ServicePage;
