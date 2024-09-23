@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
+import { Link, NavLink } from 'react-router-dom'; // Assuming you're using React Router for navigation
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,22 +37,67 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Menu Links for larger screens */}
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link to="/" className="text-white hover:text-yellow-300">
+        <div className="hidden md:flex space-x-8 items-center font-semibold">
+          <NavLink
+            to={'/'}
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
             Home
-          </Link>
-          <Link to="/services" className="text-white hover:text-yellow-300">
+          </NavLink>
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
             Services
-          </Link>
-          <Link to="/booking" className="text-white hover:text-yellow-300">
+          </NavLink>
+          <NavLink
+            to="/bookings"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
             Booking
-          </Link>
-          <Link to="/login" className="text-white hover:text-yellow-300">
-            Login
-          </Link>
-          <Link to="/contact" className="text-white hover:text-yellow-300">
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
             Contact
-          </Link>
+          </NavLink>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
+            Login
+          </NavLink>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
+            Dashboard
+          </NavLink>
         </div>
 
         {/* Mobile Menu Button */}
@@ -121,6 +166,13 @@ const Navbar: React.FC = () => {
               onClick={toggleMenu}
             >
               Contact
+            </Link>
+            <Link
+              to="/dashboard"
+              className="text-white hover:text-yellow-300"
+              onClick={toggleMenu}
+            >
+              Dashboard
             </Link>
           </div>
         </div>
