@@ -1,7 +1,12 @@
 import React from 'react';
+import Dashboard from '../../pages/dashboard/Dashboard';
 
 const DashboardLayout: React.FC = () => {
-  return <div>This is Dashboard</div>;
+  return (
+    <div>
+      <Dashboard />
+    </div>
+  );
 };
 
 export default DashboardLayout;
