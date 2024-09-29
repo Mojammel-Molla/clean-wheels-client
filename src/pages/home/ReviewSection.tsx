@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 interface Review {
   rating: number;
   feedback: string;
+  name: string;
 }
 
 const ReviewSection: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [feedback, setFeedback] = useState('');
+  const [name, setName] = useState('');
   const [reviews, setReviews] = useState<Review[]>([
-    { rating: 5, feedback: 'Great service, my car looks brand new!' },
-    { rating: 4, feedback: 'Quick and efficient. Will definitely come back!' },
+    {
+      rating: 5,
+      feedback: 'Great service, my car looks brand new!',
+      name: 'Alice',
+    },
+    {
+      rating: 4,
+      feedback: 'Quick and efficient. Will definitely come back!',
+      name: 'Bob',
+    },
+    {
+      rating: 5,
+      feedback: 'Absolutely loved the interior detailing!',
+      name: 'Charlie',
+    },
+    { rating: 4, feedback: 'The team was very professional.', name: 'Diana' },
+    { rating: 3, feedback: 'Good, but I expected a bit more.', name: 'Evan' },
   ]);
+
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
   const handleRating = (rate: number) => {
     setRating(rate);
@@ -20,31 +38,95 @@ const ReviewSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating && feedback) {
-      const newReview = { rating, feedback };
+    if (rating && feedback && name) {
+      const newReview = { rating, feedback, name };
       setReviews([newReview, ...reviews]);
       setRating(null);
       setFeedback('');
+      setName('');
     }
   };
 
-  const calculateAverageRating = () => {
-    if (reviews.length === 0) return 0;
-    const total = reviews.reduce((acc, review) => acc + review.rating, 0);
-    return (total / reviews.length).toFixed(1);
+  // Change review on interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
+    }, 5000); // Change review every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [reviews.length]);
+
+  // Navigate to the previous review
+  const handlePrevReview = () => {
+    setCurrentReviewIndex(prevIndex =>
+      prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Navigate to the next review
+  const handleNextReview = () => {
+    setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
   };
 
   return (
     <section className="bg-gray-100 p-8">
       <h2 className="text-3xl font-bold text-center text-blue-700 mb-4">
-        Leave a Review
+        Customer Reviews
       </h2>
-      <div className="flex justify-between max-w-5xl mx-auto">
+      <div className=" md:flex max-w-7xl md:gap-10 mx-auto">
+        {/* Auto Slider Section */}
+        <div className="md:w-1/2 bg-white p-6 rounded-lg shadow-lg mb-6 relative content-center ">
+          {/* <h3 className="text-2xl font-bold text-gray-700 mb-4">
+            Current Review
+          </h3> */}
+          <button
+            onClick={handlePrevReview}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-700"
+          >
+            &#10094; {/* Left Arrow */}
+          </button>
+          <button
+            onClick={handleNextReview}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-700"
+          >
+            &#10095; {/* Right Arrow */}
+          </button>
+          <div className="flex items-center mb-6">
+            <p className="text-4xl font-bold text-yellow-500">
+              {reviews[currentReviewIndex].rating}
+            </p>
+            <p className="text-xl  text-gray-600 ml-4">
+              Based on {reviews.length} reviews
+            </p>
+          </div>
+          <div className="mb- text-center">
+            <p className="text-gray-700 italic">
+              "{reviews[currentReviewIndex].feedback}"
+            </p>
+            <p className="text-gray-600 mt-2">
+              - {reviews[currentReviewIndex].name}
+            </p>
+          </div>
+        </div>
+
         {/* Form Section */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white w-1/2 p-6 rounded-lg shadow-lg mb-6"
+          className="bg-white md:w-1/2 p-6 rounded-lg shadow-lg mb-6"
         >
+          <div className="mb-4">
+            <label className="block text-lg font-bold text-gray-700 mb-2">
+              Your Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Enter your name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              required
+            />
+          </div>
           <div className="mb-4">
             <label className="block text-lg font-bold text-gray-700 mb-2">
               Rate Our Service
@@ -84,52 +166,6 @@ const ReviewSection: React.FC = () => {
             Submit Review
           </button>
         </form>
-
-        {/* Post-Submission Section */}
-        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
-            Customer Reviews
-          </h3>
-
-          {/* Average Rating */}
-          <div className="flex items-center mb-6">
-            <p className="text-4xl font-bold text-yellow-500">
-              {calculateAverageRating()}
-            </p>
-            <p className="text-xl text-gray-600 ml-4">
-              Based on {reviews.length} reviews
-            </p>
-          </div>
-
-          {/* Recent Reviews */}
-          {reviews.slice(0, 2).map((review, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex items-center mb-2">
-                {[1, 2, 3, 4, 5].map(star => (
-                  <span
-                    key={star}
-                    className={`text-xl ${
-                      star <= review.rating
-                        ? 'text-yellow-400'
-                        : 'text-gray-300'
-                    }`}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-              <p className="text-gray-700 italic">"{review.feedback}"</p>
-            </div>
-          ))}
-
-          {/* See All Reviews Button */}
-          <Link
-            to="/reviews"
-            className="block mt-6 text-blue-700 font-bold text-center hover:underline"
-          >
-            See All Reviews
-          </Link>
-        </div>
       </div>
     </section>
   );
