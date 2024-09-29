@@ -28,7 +28,7 @@ const ScrollToTopButton: React.FC = () => {
   return (
     <button
       onClick={scrollToTop}
-      className={`fixed bottom-4 right-4 p-3 bg-blue-700 text-white rounded-full shadow-lg transition-opacity duration-300 animate-bounce ${
+      className={`fixed bottom-4 right-4 p-3 bg-yellow-300 text-blue-600 rounded-full shadow-lg transition-opacity duration-300 animate-bounce ${
         isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       style={{ display: isVisible ? 'flex ' : 'none' }}
