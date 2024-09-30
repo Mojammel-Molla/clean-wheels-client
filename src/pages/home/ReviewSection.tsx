@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useGetAllReviewsQuery } from '../../redux/features/reviewSlice';
+import { TReview } from '../../types';
 
 interface Review {
   rating: number;
@@ -10,7 +12,7 @@ const ReviewSection: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [feedback, setFeedback] = useState('');
   const [name, setName] = useState('');
-  const [reviews, setReviews] = useState<Review[]>([
+  const [review, setReview] = useState<Review[]>([
     {
       rating: 5,
       feedback: 'Great service, my car looks brand new!',
@@ -40,7 +42,7 @@ const ReviewSection: React.FC = () => {
     e.preventDefault();
     if (rating && feedback && name) {
       const newReview = { rating, feedback, name };
-      setReviews([newReview, ...reviews]);
+      setReview([newReview, ...review]);
       setRating(null);
       setFeedback('');
       setName('');
@@ -50,11 +52,11 @@ const ReviewSection: React.FC = () => {
   // Change review on interval
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
+      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % review.length);
     }, 5000); // Change review every 5 seconds
 
     return () => clearInterval(interval);
-  }, [reviews.length]);
+  }, [review.length]);
 
   // Navigate to the previous review
   const handlePrevReview = () => {
@@ -68,13 +70,19 @@ const ReviewSection: React.FC = () => {
     setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
   };
 
+  const { data, error, isLoading } = useGetAllReviewsQuery({});
+  const reviews: TReview[] = data?.data;
+  console.log(reviews);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading services</div>;
   return (
-    <section className="bg-gray-100 p-8">
+    <section className="border-2 p-8">
       <h2 className="text-3xl font-bold text-center text-blue-700 mb-4">
         Customer Reviews
       </h2>
       <div className=" md:flex max-w-7xl md:gap-10 mx-auto">
         {/* Auto Slider Section */}
+
         <div className="md:w-1/2 bg-white p-6 rounded-lg shadow-lg mb-6 relative content-center ">
           {/* <h3 className="text-2xl font-bold text-gray-700 mb-4">
             Current Review
@@ -91,21 +99,23 @@ const ReviewSection: React.FC = () => {
           >
             &#10095; {/* Right Arrow */}
           </button>
-          <div className="flex items-center mb-6">
-            <p className="text-4xl font-bold text-yellow-500">
-              {reviews[currentReviewIndex].rating}
-            </p>
-            <p className="text-xl  text-gray-600 ml-4">
-              Based on {reviews.length} reviews
-            </p>
-          </div>
-          <div className="mb- text-center">
-            <p className="text-gray-700 italic">
-              "{reviews[currentReviewIndex].feedback}"
-            </p>
-            <p className="text-gray-600 mt-2">
-              - {reviews[currentReviewIndex].name}
-            </p>
+          <div>
+            <div className="flex items-center mb-6">
+              <p className="text-4xl font-bold text-yellow-500">
+                {review[currentReviewIndex].rating}
+              </p>
+              <p className="text-xl  text-gray-600 ml-4">
+                Based on {review.length} reviews
+              </p>
+            </div>
+            <div className="mb- text-center">
+              <p className="text-gray-700 italic">
+                "{review[currentReviewIndex].feedback}"
+              </p>
+              <p className="text-gray-600 mt-2">
+                - {review[currentReviewIndex].name}
+              </p>
+            </div>
           </div>
         </div>
 

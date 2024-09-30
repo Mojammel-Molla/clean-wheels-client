@@ -1,12 +1,18 @@
 import React from 'react';
 import { TService } from '../../types';
 import { useGetAllServicesQuery } from '../../redux/features/serviceSlice';
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 const ServicePage: React.FC = () => {
   const { data, error, isLoading } = useGetAllServicesQuery({});
   const services: TService[] = data?.data;
   console.log(services);
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   if (error) return <div>Error loading services</div>;
 
   return (
@@ -15,7 +21,7 @@ const ServicePage: React.FC = () => {
         All services
       </h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ">
         {services?.map(service => (
           <div
             key={service._id}
