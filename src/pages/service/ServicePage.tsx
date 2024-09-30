@@ -2,6 +2,7 @@ import React from 'react';
 import { TService } from '../../types';
 import { useGetAllServicesQuery } from '../../redux/features/serviceSlice';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import ErrorComponent from '../../components/ui/ErrorComponent';
 
 const ServicePage: React.FC = () => {
   const { data, error, isLoading } = useGetAllServicesQuery({});
@@ -13,11 +14,16 @@ const ServicePage: React.FC = () => {
         <LoadingSpinner />
       </div>
     );
-  if (error) return <div>Error loading services</div>;
+  if (error)
+    return (
+      <div>
+        <ErrorComponent />{' '}
+      </div>
+    );
 
   return (
     <div className="md:mx-10 md:my-5">
-      <h3 className="text-3xl text-blue-700 font-bold my-3 text-center">
+      <h3 className="text-center mb-8 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-500">
         All services
       </h3>
 

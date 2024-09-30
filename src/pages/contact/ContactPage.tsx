@@ -25,9 +25,11 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-blue-700 text-white py-16 px-4">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-8">Get in Touch</h2>
+    <section className="bg-gradient-to-r from-blue-100 to-blue-300 text-blue-800 py-16 px-4">
+      <div className="max-w-5xl mx-auto bg-white p-5 rounded-lg">
+        <h2 className=" text-center mb-8 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-500">
+          Get in Touch
+        </h2>
         <p className="text-center mb-12">
           We are here to assist you with all your car wash needs. Feel free to
           reach out to us!

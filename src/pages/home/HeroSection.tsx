@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="bg-gradient-to-r from-blue-500 to-blue-300 text-white py-16 px-6 ">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+    <section className="bg-gradient-to-r from-blue-500 to-blue-300 text-white py-16 px-6  h-[70vh]">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
         {/* Branding Message */}
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h1 className="text-5xl font-bold leading-tight tracking-wide">

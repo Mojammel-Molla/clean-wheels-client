@@ -1,62 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { useGetAllReviewsQuery } from '../../redux/features/reviewSlice';
 import { TReview } from '../../types';
-
-interface Review {
-  rating: number;
-  feedback: string;
-  name: string;
-}
+import LoadingSpinner from '../../components/ui/LoadingSpinner';
+import ErrorComponent from '../../components/ui/ErrorComponent';
 
 const ReviewSection: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
-  const [feedback, setFeedback] = useState('');
+  const [comment, setComment] = useState('');
   const [name, setName] = useState('');
-  const [review, setReview] = useState<Review[]>([
-    {
-      rating: 5,
-      feedback: 'Great service, my car looks brand new!',
-      name: 'Alice',
-    },
-    {
-      rating: 4,
-      feedback: 'Quick and efficient. Will definitely come back!',
-      name: 'Bob',
-    },
-    {
-      rating: 5,
-      feedback: 'Absolutely loved the interior detailing!',
-      name: 'Charlie',
-    },
-    { rating: 4, feedback: 'The team was very professional.', name: 'Diana' },
-    { rating: 3, feedback: 'Good, but I expected a bit more.', name: 'Evan' },
-  ]);
-
+  //  const [review, setReview] = useState<Review[]>([
+  //     {
+  //       rating: 5,
+  //       feedback: 'Great service, my car looks brand new!',
+  //       name: 'Alice',
+  //     },
+  //     {
+  //       rating: 4,
+  //       feedback: 'Quick and efficient. Will definitely come back!',
+  //       name: 'Bob',
+  //     },
+  //     {
+  //       rating: 5,
+  //       feedback: 'Absolutely loved the interior detailing!',
+  //       name: 'Charlie',
+  //     },
+  //     { rating: 4, feedback: 'The team was very professional.', name: 'Diana' },
+  //     { rating: 3, feedback: 'Good, but I expected a bit more.', name: 'Evan' },
+  //   ]);
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
+  const { data, error, isLoading } = useGetAllReviewsQuery({});
+  const reviews: TReview[] = data?.data;
+  console.log(reviews);
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  if (error)
+    return (
+      <div>
+        <ErrorComponent />
+      </div>
+    );
   const handleRating = (rate: number) => {
     setRating(rate);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating && feedback && name) {
-      const newReview = { rating, feedback, name };
-      setReview([newReview, ...review]);
-      setRating(null);
-      setFeedback('');
-      setName('');
+    if (rating && comment && name) {
+      const newReview = { rating, comment, name };
+
+      console.log(newReview);
     }
   };
 
   // Change review on interval
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % review.length);
+      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
     }, 5000); // Change review every 5 seconds
 
     return () => clearInterval(interval);
-  }, [review.length]);
+  }, [reviews.length]);
 
   // Navigate to the previous review
   const handlePrevReview = () => {
@@ -70,20 +79,15 @@ const ReviewSection: React.FC = () => {
     setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
   };
 
-  const { data, error, isLoading } = useGetAllReviewsQuery({});
-  const reviews: TReview[] = data?.data;
-  console.log(reviews);
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading services</div>;
   return (
     <section className="border-2 p-8">
-      <h2 className="text-3xl font-bold text-center text-blue-700 mb-4">
+      <h2 className="text-center mb-8 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-500">
         Customer Reviews
       </h2>
       <div className=" md:flex max-w-7xl md:gap-10 mx-auto">
         {/* Auto Slider Section */}
 
-        <div className="md:w-1/2 bg-white p-6 rounded-lg shadow-lg mb-6 relative content-center ">
+        <div className="md:w-2/3 bg-white p-6 rounded-lg shadow-lg mb-6 relative content-center ">
           {/* <h3 className="text-2xl font-bold text-gray-700 mb-4">
             Current Review
           </h3> */}
@@ -100,20 +104,30 @@ const ReviewSection: React.FC = () => {
             &#10095; {/* Right Arrow */}
           </button>
           <div>
-            <div className="flex items-center mb-6">
-              <p className="text-4xl font-bold text-yellow-500">
-                {review[currentReviewIndex].rating}
-              </p>
-              <p className="text-xl  text-gray-600 ml-4">
-                Based on {review.length} reviews
-              </p>
+            <div className="flex items-center justify-center mb-8">
+              {/* Display stars for the current review */}
+              <div className="flex space-x-1">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className={`text-4xl ${
+                      index < reviews[currentReviewIndex].rating
+                        ? 'text-yellow-400'
+                        : 'text-gray-300'
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="mb- text-center">
-              <p className="text-gray-700 italic">
-                "{review[currentReviewIndex].feedback}"
+
+            <div className="text-center">
+              <p className="text-gray-700 italic text-center">
+                "{reviews[currentReviewIndex].comment}"
               </p>
               <p className="text-gray-600 mt-2">
-                - {review[currentReviewIndex].name}
+                - {reviews[currentReviewIndex].name}
               </p>
             </div>
           </div>
@@ -122,7 +136,7 @@ const ReviewSection: React.FC = () => {
         {/* Form Section */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white md:w-1/2 p-6 rounded-lg shadow-lg mb-6"
+          className="bg-white md:w-1/3 p-6 rounded-lg shadow-lg mb-6"
         >
           <div className="mb-4">
             <label className="block text-lg font-bold text-gray-700 mb-2">
@@ -161,8 +175,8 @@ const ReviewSection: React.FC = () => {
               Your Feedback
             </label>
             <textarea
-              value={feedback}
-              onChange={e => setFeedback(e.target.value)}
+              value={comment}
+              onChange={e => setComment(e.target.value)}
               placeholder="Tell us about your experience..."
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
               rows={5}
