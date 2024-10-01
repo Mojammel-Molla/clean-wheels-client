@@ -89,6 +89,16 @@ const Navbar: React.FC = () => {
             Login
           </NavLink>
           <NavLink
+            to="/register"
+            className={({ isActive }) =>
+              isActive
+                ? 'text-yellow-400 underline'
+                : 'text-white hover:text-yellow-300'
+            }
+          >
+            Register
+          </NavLink>
+          <NavLink
             to="/dashboard"
             className={({ isActive }) =>
               isActive

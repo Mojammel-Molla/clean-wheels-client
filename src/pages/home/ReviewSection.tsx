@@ -1,36 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useGetAllReviewsQuery } from '../../redux/features/reviewSlice';
+// import {
+//   setComment,
+//   setName,
+//   setRating,
+// } from '../../redux/features/reviewSlice';
 import { TReview } from '../../types';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorComponent from '../../components/ui/ErrorComponent';
+// import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+// import { RootState } from '@reduxjs/toolkit/query';
+import {
+  useCreateReviewMutation,
+  useGetAllReviewsQuery,
+} from '../../redux/api/review/reviewApi';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ReviewSection: React.FC = () => {
   const [rating, setRating] = useState<number | null>(null);
   const [comment, setComment] = useState('');
   const [name, setName] = useState('');
-  //  const [review, setReview] = useState<Review[]>([
-  //     {
-  //       rating: 5,
-  //       feedback: 'Great service, my car looks brand new!',
-  //       name: 'Alice',
-  //     },
-  //     {
-  //       rating: 4,
-  //       feedback: 'Quick and efficient. Will definitely come back!',
-  //       name: 'Bob',
-  //     },
-  //     {
-  //       rating: 5,
-  //       feedback: 'Absolutely loved the interior detailing!',
-  //       name: 'Charlie',
-  //     },
-  //     { rating: 4, feedback: 'The team was very professional.', name: 'Diana' },
-  //     { rating: 3, feedback: 'Good, but I expected a bit more.', name: 'Evan' },
-  //   ]);
+
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
   const { data, error, isLoading } = useGetAllReviewsQuery({});
+  const [createReview] = useCreateReviewMutation();
   const reviews: TReview[] = data?.data;
+  // const dispatch = useAppDispatch();
+  // const { name, comment, rating } = useAppSelector(
+  //   (state: RootState) => state.review
+  // );
   console.log(reviews);
   if (isLoading)
     return (
@@ -46,14 +44,19 @@ const ReviewSection: React.FC = () => {
     );
   const handleRating = (rate: number) => {
     setRating(rate);
+    console.log('This is rating', rating);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (rating && comment && name) {
       const newReview = { rating, comment, name };
-
+      createReview(newReview);
+      toast.success('Review posted successfully');
       console.log(newReview);
+      setRating(null);
+      setComment('');
+      setName('');
     }
   };
 
@@ -93,13 +96,13 @@ const ReviewSection: React.FC = () => {
           </h3> */}
           <button
             onClick={handlePrevReview}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-700"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-700 text-2xl "
           >
             &#10094; {/* Left Arrow */}
           </button>
           <button
             onClick={handleNextReview}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-700"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-700 text-2xl"
           >
             &#10095; {/* Right Arrow */}
           </button>
@@ -191,6 +194,7 @@ const ReviewSection: React.FC = () => {
           </button>
         </form>
       </div>
+      <Toaster />
     </section>
   );
 };

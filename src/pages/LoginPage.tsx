@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
+import { setEmail, setPassword } from '../redux/features/loginSlice';
+import { useLoginMutation } from '../redux/api/auth/authApi';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginPage: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleLogin = (e: React.FormEvent) => {
+  const dispatch = useAppDispatch();
+  const { email, password } = useAppSelector((state: RootState) => state.login);
+  const [login] = useLoginMutation(undefined);
+  const navigate = useNavigate();
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
-    console.log({ formData });
+    const user = await login({ email, password });
+    if (user.data.success) {
+      toast.success('Login successfully');
+      console.log({ userInfo: email, password }, 'out put', user.data);
+      navigate('/');
+    }
   };
 
   return (
@@ -43,8 +46,8 @@ const LoginPage: React.FC = () => {
             <input
               type="email"
               id="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={e => dispatch(setEmail(e.target.value))}
               required
               className="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -60,8 +63,8 @@ const LoginPage: React.FC = () => {
             <input
               type="password"
               id="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={e => dispatch(setPassword(e.target.value))}
               required
               className="mt-1 px-4 py-2 w-full border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
             />
@@ -91,6 +94,7 @@ const LoginPage: React.FC = () => {
           </p>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

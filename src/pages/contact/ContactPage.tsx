@@ -38,7 +38,10 @@ const ContactPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label htmlFor="name" className="block text-lg mb-2">
+              <label
+                htmlFor="name"
+                className="block text-lg mb-2 font-semibold"
+              >
                 Name
               </label>
               <input
@@ -53,7 +56,10 @@ const ContactPage: React.FC = () => {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-lg mb-2">
+              <label
+                htmlFor="email"
+                className="block text-lg mb-2 font-semibold"
+              >
                 Email
               </label>
               <input
@@ -69,7 +75,7 @@ const ContactPage: React.FC = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="phone" className="block text-lg mb-2">
+            <label htmlFor="phone" className="block text-lg mb-2 font-semibold">
               Phone Number
             </label>
             <input
@@ -84,14 +90,17 @@ const ContactPage: React.FC = () => {
             />
           </div>
           <div>
-            <label htmlFor="message" className="block text-lg mb-2">
+            <label
+              htmlFor="message"
+              className="block text-lg mb-2 font-semibold"
+            >
               Message
             </label>
             <textarea
               id="message"
               name="message"
               rows={4}
-              className="w-full p-3 rounded-lg border-2 border-blue-500 text-black"
+              className="w-full p-3 rounded-lg border-2 border-blue-500 text-black "
               placeholder="Your Message"
               value={formData.message}
               onChange={handleInputChange}

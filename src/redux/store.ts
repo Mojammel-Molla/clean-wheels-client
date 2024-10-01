@@ -3,11 +3,13 @@ import { api } from './api/api';
 import registerReducer from './features/registerSlice';
 import loginReducer from './features/loginSlice';
 import bookingReducer from './features/bookingSlice';
+import reviewReducer from './features/reviewSlice';
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     booking: bookingReducer,
+    review: reviewReducer,
     register: registerReducer,
     login: loginReducer,
   },

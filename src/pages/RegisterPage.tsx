@@ -1,23 +1,45 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { RootState } from '../redux/store';
+import {
+  setAddress,
+  setEmail,
+  setName,
+  setPassword,
+  setPhoneNumber,
+} from '../redux/features/registerSlice';
+import { useRegisterMutation } from '../redux/api/auth/authApi';
+import toast, { Toaster } from 'react-hot-toast';
 
 const RegisterPage = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phone: '',
-    address: '',
-  });
+  const dispatch = useAppDispatch();
+  const { name, email, password, phone, address } = useAppSelector(
+    (state: RootState) => state.register
+  );
+  const [register] = useRegisterMutation();
+  const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     // Handle form submission
+    const user = await register({
+      name,
+      email,
+      password,
+      phone,
+      role: 'user',
+      address,
+    });
+    if (user.data.success) {
+      toast.success('User created successfully');
+      navigate('/login');
+    }
+    console.log(
+      { userInfo: name, email, password, phone, address },
+      'out put',
+      user.data
+    );
   };
 
   return (
@@ -30,8 +52,8 @@ const RegisterPage = () => {
             <input
               type="text"
               name="name"
-              value={formData.name}
-              onChange={handleChange}
+              value={name}
+              onChange={e => dispatch(setName(e.target.value))}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -41,8 +63,8 @@ const RegisterPage = () => {
             <input
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={e => dispatch(setEmail(e.target.value))}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -52,8 +74,8 @@ const RegisterPage = () => {
             <input
               type="password"
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={e => dispatch(setPassword(e.target.value))}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -63,8 +85,8 @@ const RegisterPage = () => {
             <input
               type="text"
               name="phone"
-              value={formData.phone}
-              onChange={handleChange}
+              value={phone}
+              onChange={e => dispatch(setPhoneNumber(e.target.value))}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -74,8 +96,8 @@ const RegisterPage = () => {
             <input
               type="text"
               name="address"
-              value={formData.address}
-              onChange={handleChange}
+              value={address}
+              onChange={e => dispatch(setAddress(e.target.value))}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               required
             />
@@ -96,6 +118,7 @@ const RegisterPage = () => {
           </p>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };
