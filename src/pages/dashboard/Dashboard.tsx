@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet } from 'react-router-dom'; // Assuming you're using React Router for navigation
+import { Link, NavLink, Outlet } from 'react-router-dom'; // Assuming you're using React Router for navigation
 
 const Dashboard: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -61,38 +61,54 @@ const Dashboard: React.FC = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className="space-y-6">
-          <li>
-            <Link
+        <ul className="space-y-6 ">
+          <li className="py-2 px-4 font-semibold">
+            <NavLink
               to="/dashboard/my-bookings"
-              className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-400 underline'
+                  : 'text-white hover:text-yellow-300'
+              }
             >
               My Bookings
-            </Link>
+            </NavLink>
           </li>
-          <li>
-            <Link
+          <li className="py-2 px-4 font-semibold">
+            <NavLink
               to="/dashboard/service-management"
-              className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-400 underline'
+                  : 'text-white hover:text-yellow-300'
+              }
             >
               Services Management
-            </Link>
+            </NavLink>
           </li>
-          <li>
-            <Link
+          <li className="py-2 px-4 font-semibold">
+            <NavLink
               to="/dashboard/slot-management"
-              className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-400 underline'
+                  : 'text-white hover:text-yellow-300'
+              }
             >
               Slot Management
-            </Link>
+            </NavLink>
           </li>
-          <li>
-            <Link
+          <li className="py-2 px-4 font-semibold">
+            <NavLink
               to="/dashboard/user-management"
-              className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-400 underline'
+                  : 'text-white hover:text-yellow-300'
+              }
             >
               User Management
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
