@@ -9,6 +9,12 @@ const authApi = api.injectEndpoints({
         body: userInfo,
       }),
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        url: '/auth/register',
+        method: 'GET',
+      }),
+    }),
 
     login: builder.mutation({
       query: userInfo => ({
@@ -20,4 +26,5 @@ const authApi = api.injectEndpoints({
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGetAllUsersQuery } =
+  authApi;

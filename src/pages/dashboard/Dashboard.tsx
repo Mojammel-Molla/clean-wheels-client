@@ -110,6 +110,18 @@ const Dashboard: React.FC = () => {
               User Management
             </NavLink>
           </li>
+          <li className="py-2 px-4 font-semibold">
+            <NavLink
+              to="/dashboard/booking-management"
+              className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-400 underline'
+                  : 'text-white hover:text-yellow-300'
+              }
+            >
+              Booking Management
+            </NavLink>
+          </li>
         </ul>
       </nav>
 
