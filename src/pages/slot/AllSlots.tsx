@@ -23,12 +23,12 @@ const AllSlots: React.FC = () => {
   if (error)
     return (
       <div>
-        <ErrorComponent />{' '}
+        <ErrorComponent />
       </div>
     );
 
   return (
-    <div className="h-[70vh]">
+    <div className="h-[70vh] flex justify-center items-center">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
         {slots?.map(slot => (
           <div key={slot._id} className="bg-white shadow-lg rounded-lg p-4">

@@ -26,7 +26,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <section className="bg-gradient-to-r from-blue-100 to-blue-300 text-blue-800 py-16 px-4">
-      <div className="max-w-5xl mx-auto bg-white p-5 rounded-lg">
+      <div className="max-w-4xl mx-auto bg-white p-5 rounded-lg">
         <h2 className=" text-center mb-8 text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-blue-500">
           Get in Touch
         </h2>
@@ -35,7 +35,7 @@ const ContactPage: React.FC = () => {
           reach out to us!
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label
