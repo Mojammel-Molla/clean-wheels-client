@@ -10,7 +10,7 @@ import MainLayout from '../components/layouts/MainLayout';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import AllSlots from '../pages/slot/AllSlots';
 import MyBookings from '../pages/dashboard/user/MyBookings';
-import ServiceManagement from '../pages/dashboard/admin/ServiceManagement';
+import ServiceManagement from '../pages/dashboard/admin/servicemanagement/ServiceManagement';
 import SlotManagement from '../pages/dashboard/admin/SlotManagement';
 import UserManagement from '../pages/dashboard/admin/UserManagement';
 
