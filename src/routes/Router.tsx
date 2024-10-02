@@ -8,6 +8,7 @@ import ContactPage from '../pages/contact/ContactPage';
 import ErrorPage from '../pages/error/ErrorPage';
 import MainLayout from '../components/layouts/MainLayout';
 import DashboardLayout from '../components/layouts/DashboardLayout';
+import AllSlots from '../pages/slot/AllSlots';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: 'services',
         element: <ServicePage />,
+      },
+      {
+        path: 'service/:id',
+        element: <AllSlots />,
       },
       {
         path: 'bookings',

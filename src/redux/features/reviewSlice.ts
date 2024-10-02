@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState = {
   name: '',
   comment: '',
-  rating: '',
+  rating: 0,
 };
 
 const reviewSlice = createSlice({
@@ -16,7 +16,7 @@ const reviewSlice = createSlice({
     setComment: (state, action: PayloadAction<string>) => {
       state.comment = action.payload;
     },
-    setRating: (state, action: PayloadAction<string>) => {
+    setRating: (state, action: PayloadAction<number>) => {
       state.rating = action.payload;
     },
   },

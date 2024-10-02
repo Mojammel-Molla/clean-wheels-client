@@ -52,9 +52,9 @@ const Dashboard: React.FC = () => {
       <nav
         className={`${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 fixed md:relative z-40 w-1/6 bg-blue-700 text-white p-4 transition-transform duration-300 ease-in-out`}
+        } md:translate-x-0 fixed md:relative z-40 md:w-1/6 bg-blue-700 text-white p-4 transition-transform duration-400 ease-in-out`}
       >
-        <div className="text-3xl font-extrabold mb-8">
+        <div className="lg:text-3xl font-extrabold my-9">
           <Link to="/" className="hover:text-yellow-300">
             Dashboard
           </Link>

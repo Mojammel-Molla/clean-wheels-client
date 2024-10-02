@@ -1,14 +1,14 @@
 import React from 'react';
-import { useGetAllServicesQuery } from '../../redux/features/serviceSlice';
+
 import { TService } from '../../types';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorComponent from '../../components/ui/ErrorComponent';
+import { useGetAllServicesQuery } from '../../redux/api/service/serviceApi';
 
 const ServiceList: React.FC = () => {
-  const { data, error, isLoading } = useGetAllServicesQuery({});
+  const { data, error, isLoading } = useGetAllServicesQuery(undefined);
   const services: TService[] = data?.data;
-  console.log(services);
   if (isLoading)
     return (
       <div>
@@ -53,9 +53,11 @@ const ServiceList: React.FC = () => {
               </div>
             </div>
 
-            <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
-              Book Now
-            </button>
+            <Link to={`/service/${service._id}`}>
+              <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                Book Now
+              </button>
+            </Link>
           </div>
         ))}
       </div>

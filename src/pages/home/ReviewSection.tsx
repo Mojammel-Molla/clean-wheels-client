@@ -29,7 +29,6 @@ const ReviewSection: React.FC = () => {
   // const { name, comment, rating } = useAppSelector(
   //   (state: RootState) => state.review
   // );
-  console.log(reviews);
   if (isLoading)
     return (
       <div>
@@ -53,7 +52,6 @@ const ReviewSection: React.FC = () => {
       const newReview = { rating, comment, name };
       createReview(newReview);
       toast.success('Review posted successfully');
-      console.log(newReview);
       setRating(null);
       setComment('');
       setName('');

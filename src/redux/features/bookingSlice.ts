@@ -15,7 +15,7 @@ const bookingSlice = createSlice({
 
       // Calculate total price directly in the reducer
       state.totalPrice = state.services.reduce(
-        (total, product) => total + product.price * (product.quantity || 1),
+        (total, service) => total + service.price * (service.quantity || 1),
         0
       );
     },
@@ -25,8 +25,8 @@ const bookingSlice = createSlice({
 // Selector to get the total price
 export const selectTotalPrice = (state: any) => {
   return state.booking.services.reduce(
-    (total: number, product: any) =>
-      total + product.price * (product.quantity || 1),
+    (total: number, service: any) =>
+      total + service.price * (service.quantity || 1),
     0
   );
 };
