@@ -64,34 +64,34 @@ const Dashboard: React.FC = () => {
         <ul className="space-y-6">
           <li>
             <Link
-              to="/dashboard/overview"
+              to="/dashboard/my-bookings"
               className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
             >
-              Overview
+              My Bookings
             </Link>
           </li>
           <li>
             <Link
-              to="/dashboard/reports"
+              to="/dashboard/service-management"
               className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
             >
-              Reports
+              Services Management
             </Link>
           </li>
           <li>
             <Link
-              to="/dashboard/settings"
+              to="/dashboard/slot-management"
               className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
             >
-              Settings
+              Slot Management
             </Link>
           </li>
           <li>
             <Link
-              to="/dashboard/profile"
+              to="/dashboard/user-management"
               className="block py-2 px-4 hover:bg-blue-600 rounded-lg"
             >
-              Profile
+              User Management
             </Link>
           </li>
         </ul>

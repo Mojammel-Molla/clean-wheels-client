@@ -9,6 +9,10 @@ import ErrorPage from '../pages/error/ErrorPage';
 import MainLayout from '../components/layouts/MainLayout';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import AllSlots from '../pages/slot/AllSlots';
+import MyBookings from '../pages/dashboard/user/MyBookings';
+import ServiceManagement from '../pages/dashboard/admin/ServiceManagement';
+import SlotManagement from '../pages/dashboard/admin/SlotManagement';
+import UserManagement from '../pages/dashboard/admin/UserManagement';
 
 const router = createBrowserRouter([
   {
@@ -42,7 +46,24 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <DashboardLayout />,
 
-    children: [],
+    children: [
+      {
+        path: 'my-bookings',
+        element: <MyBookings />,
+      },
+      {
+        path: 'service-management',
+        element: <ServiceManagement />,
+      },
+      {
+        path: 'slot-management',
+        element: <SlotManagement />,
+      },
+      {
+        path: 'user-management',
+        element: <UserManagement />,
+      },
+    ],
   },
   {
     path: '/login',

@@ -10,7 +10,7 @@ export const serviceApi = api.injectEndpoints({
         };
       },
     }),
-    getServicesById: builder.query({
+    getServiceById: builder.query({
       query: id => {
         return {
           url: `/services/${id}`,
@@ -21,4 +21,4 @@ export const serviceApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllServicesQuery, useGetServicesByIdQuery } = serviceApi;
+export const { useGetAllServicesQuery, useGetServiceByIdQuery } = serviceApi;

@@ -2,12 +2,18 @@ import React from 'react';
 import { useGetAllSlotsQuery } from '../../redux/api/slot/slotApi';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorComponent from '../../components/ui/ErrorComponent';
-import { TSlot } from '../../types';
+import { TService, TSlot } from '../../types';
+import { useGetServiceByIdQuery } from '../../redux/api/service/serviceApi';
+import { useParams } from 'react-router-dom';
 
 const AllSlots: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { data, error, isLoading } = useGetAllSlotsQuery(undefined);
+  const { data: serviceById } = useGetServiceByIdQuery(id!);
+
   const slots: TSlot[] = data?.data;
-  console.log(slots);
+  const service: TService = serviceById?.data;
+  console.log(slots, service);
   if (isLoading)
     return (
       <div>
@@ -25,21 +31,35 @@ const AllSlots: React.FC = () => {
     <div className="h-[70vh]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
         {slots?.map(slot => (
-          <div key={slot._id} className="bg-white shadow-md rounded-lg p-4">
+          <div key={slot._id} className="bg-white shadow-lg rounded-lg p-4">
             {/* Slot Service and Status */}
             <div className="flex items-center justify-between mb-2">
-              <span className="font-bold text-lg text-blue-600">
-                Service ID: {slot.service}
-              </span>
-              <span
-                className={`px-2 py-1 rounded-full text-sm ${
-                  slot.isBooked === 'available'
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-red-100 text-red-700'
-                }`}
-              >
-                {slot.isBooked}
-              </span>
+              <div className="bg-white  border-gray-200  rounded-lg p-6 transition-transform transform hover:scale-105">
+                <div className="flex justify-between items-center">
+                  <h2 className=" text-2xl md:text-3xl font-bold ">
+                    {service.name}
+                  </h2>
+                </div>
+
+                <p className="text-gray-600 mt-3">{service.description}</p>
+
+                <div className="mt-4">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xl font-semibold text-green-500">
+                      ${service.price}
+                    </p>
+                    <span
+                      className={`px-3 py-2 rounded-full text-sm ${
+                        slot.isBooked === 'available'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {slot.isBooked}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Date */}
@@ -55,7 +75,7 @@ const AllSlots: React.FC = () => {
             {/* Book Now Button */}
             {slot.isBooked === 'available' && (
               <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all">
-                Book Now
+                Book Slot
               </button>
             )}
           </div>

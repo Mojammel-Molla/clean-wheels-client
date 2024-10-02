@@ -53,9 +53,9 @@ const ServicePage: React.FC = () => {
               </div>
             </div>
 
-            <Link to={`services/${service._id}`}>
+            <Link to={`/service/${service._id}`}>
               <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                Book Now
+                Book Slot
               </button>
             </Link>
           </div>
