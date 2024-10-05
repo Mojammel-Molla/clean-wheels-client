@@ -2,7 +2,18 @@ import { api } from '../api';
 
 export const serviceApi = api.injectEndpoints({
   endpoints: builder => ({
+    createServices: builder.mutation({
+      query: service => {
+        return {
+          url: '/services',
+          method: 'POST',
+          body: service,
+        };
+      },
+      invalidatesTags: ['service'],
+    }),
     getAllServices: builder.query({
+      providesTags: ['service'],
       query: () => {
         return {
           url: '/services',
@@ -18,7 +29,21 @@ export const serviceApi = api.injectEndpoints({
         };
       },
     }),
+    deleteServices: builder.mutation({
+      query: id => {
+        return {
+          url: `/services/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['service'],
+    }),
   }),
 });
 
-export const { useGetAllServicesQuery, useGetServiceByIdQuery } = serviceApi;
+export const {
+  useGetAllServicesQuery,
+  useGetServiceByIdQuery,
+  useCreateServicesMutation,
+  useDeleteServicesMutation,
+} = serviceApi;

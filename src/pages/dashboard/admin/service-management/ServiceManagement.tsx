@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { TService } from '../../../../types';
-import { useGetAllServicesQuery } from '../../../../redux/api/service/serviceApi';
+import {
+  useDeleteServicesMutation,
+  useGetAllServicesQuery,
+} from '../../../../redux/api/service/serviceApi';
 import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
 import ErrorComponent from '../../../../components/ui/ErrorComponent';
 import ServiceModal from './ServiceModal';
+import toast, { Toaster } from 'react-hot-toast';
 
 const ServiceManagement: React.FC<{ services: TService[] }> = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +18,8 @@ const ServiceManagement: React.FC<{ services: TService[] }> = () => {
     duration: '',
   });
   const { data, error, isLoading } = useGetAllServicesQuery(undefined);
+  const [deleteService] = useDeleteServicesMutation(undefined);
+
   const services: TService[] = data?.data;
   console.log(services);
   if (isLoading)
@@ -49,6 +55,14 @@ const ServiceManagement: React.FC<{ services: TService[] }> = () => {
     handleCloseModal();
   };
 
+  const handleDeleteService = async (id: string) => {
+    const res = await deleteService(id);
+    if (res) {
+      toast.success('Service deleted successfully');
+      console.log(id, res);
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       {/* Add Service Button */}
@@ -81,10 +95,16 @@ const ServiceManagement: React.FC<{ services: TService[] }> = () => {
               <td className="py-2 px-4">${service.price}</td>
               <td className="py-2 px-4">{service.duration} mins</td>
               <td className="py-2 px-4">
+                <button></button>
                 {service.isDeleted ? (
                   <span className="text-red-500">Deleted</span>
                 ) : (
-                  <span className="text-green-500">Active</span>
+                  <button
+                    onClick={() => handleDeleteService(service._id)}
+                    className="text-green-500"
+                  >
+                    Active
+                  </button>
                 )}
               </td>
             </tr>
@@ -94,6 +114,8 @@ const ServiceManagement: React.FC<{ services: TService[] }> = () => {
 
       {/* Add Service Modal */}
       {showModal && <ServiceModal setShowModal={setShowModal} />}
+
+      <Toaster />
     </div>
   );
 };

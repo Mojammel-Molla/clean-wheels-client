@@ -10,10 +10,10 @@ import MainLayout from '../components/layouts/MainLayout';
 import DashboardLayout from '../components/layouts/DashboardLayout';
 import AllSlots from '../pages/slot/AllSlots';
 import MyBookings from '../pages/dashboard/user/MyBookings';
-import SlotManagement from '../pages/dashboard/admin/SlotManagement';
 import ServiceManagement from '../pages/dashboard/admin/service-management/ServiceManagement';
 import UserManagement from '../pages/dashboard/admin/user-management/UserManagement';
 import BookingManagement from '../pages/dashboard/admin/booking-management/BookingManagement';
+import SlotManagement from '../pages/dashboard/admin/slot-management/SlotManagement';
 
 const router = createBrowserRouter([
   {
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'service-management',
-        element: <ServiceManagement services={[]} />,
+        element: <ServiceManagement />,
       },
       {
         path: 'slot-management',
@@ -62,11 +62,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'user-management',
-        element: <UserManagement users={[]} bookings={[]} />,
+        element: <UserManagement />,
       },
       {
         path: 'booking-management',
-        element: <BookingManagement bookings={[]} />,
+        element: <BookingManagement />,
       },
     ],
   },

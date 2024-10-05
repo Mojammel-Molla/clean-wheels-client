@@ -29,6 +29,7 @@ const ReviewSection: React.FC = () => {
   // const { name, comment, rating } = useAppSelector(
   //   (state: RootState) => state.review
   // );
+
   if (isLoading)
     return (
       <div>
@@ -61,11 +62,13 @@ const ReviewSection: React.FC = () => {
   // Change review on interval
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
-    }, 5000); // Change review every 5 seconds
+    if (reviews.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentReviewIndex(prevIndex => (prevIndex + 1) % reviews.length);
+      }, 5000); // Change review every 5 seconds
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [reviews.length]);
 
   // Navigate to the previous review
