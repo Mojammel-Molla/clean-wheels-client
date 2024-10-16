@@ -9,15 +9,10 @@ import ErrorComponent from '../../../../components/ui/ErrorComponent';
 import ServiceModal from './ServiceModal';
 import toast, { Toaster } from 'react-hot-toast';
 
-const ServiceManagement: React.FC<{ services: TService[] }> = () => {
+const ServiceManagement: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-  const [newService, setNewService] = useState({
-    name: '',
-    description: '',
-    price: '',
-    duration: '',
-  });
-  const { data, error, isLoading } = useGetAllServicesQuery(undefined);
+
+  const { data, error, isLoading } = useGetAllServicesQuery<any>(undefined);
   const [deleteService] = useDeleteServicesMutation(undefined);
 
   const services: TService[] = data?.data;
@@ -39,27 +34,10 @@ const ServiceManagement: React.FC<{ services: TService[] }> = () => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setNewService({
-      name: '',
-      description: '',
-      price: '',
-      duration: '',
-    });
-  };
-
-  const handleAddService = () => {
-    console.log(newService);
-    // Add service logic here
-    handleCloseModal();
-  };
-
   const handleDeleteService = async (id: string) => {
     const res = await deleteService(id);
-    if (res) {
+    if (res.data) {
       toast.success('Service deleted successfully');
-      console.log(id, res);
     }
   };
 

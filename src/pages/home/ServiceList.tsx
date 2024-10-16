@@ -7,7 +7,7 @@ import ErrorComponent from '../../components/ui/ErrorComponent';
 import { useGetAllServicesQuery } from '../../redux/api/service/serviceApi';
 
 const ServiceList: React.FC = () => {
-  const { data, error, isLoading } = useGetAllServicesQuery(undefined);
+  const { data, error, isLoading } = useGetAllServicesQuery<any>(undefined);
   const services: TService[] = data?.data;
   if (isLoading)
     return (

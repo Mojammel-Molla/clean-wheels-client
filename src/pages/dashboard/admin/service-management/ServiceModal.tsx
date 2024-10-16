@@ -31,7 +31,7 @@ const ServiceModal: React.FC<ModalProps> = ({ setShowModal }) => {
     };
 
     const result = await createService(NewService);
-    if (result.data.success) {
+    if (result?.data) {
       toast.success('Service created successfully');
     }
     setShowModal(false);

@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom';
 
 const AllSlots: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, error, isLoading } = useGetAllSlotsQuery(undefined);
-  const { data: serviceById } = useGetServiceByIdQuery(id!);
+  const { data, error, isLoading } = useGetAllSlotsQuery<any>(undefined);
+  const { data: serviceById } = useGetServiceByIdQuery<any>(id!);
 
   const slots: TSlot[] = data?.data;
   const service: TService = serviceById?.data;

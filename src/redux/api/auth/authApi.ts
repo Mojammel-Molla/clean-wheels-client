@@ -10,6 +10,7 @@ const authApi = api.injectEndpoints({
       }),
     }),
     getAllUsers: builder.query({
+      providesTags: ['user'],
       query: () => ({
         url: '/auth/register',
         method: 'GET',
@@ -23,8 +24,19 @@ const authApi = api.injectEndpoints({
         body: userInfo,
       }),
     }),
+    updateRole: builder.mutation({
+      query: (id: string) => ({
+        url: `/auth/register/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['user'],
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useGetAllUsersQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useGetAllUsersQuery,
+  useUpdateRoleMutation,
+} = authApi;

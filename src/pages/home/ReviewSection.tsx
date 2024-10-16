@@ -22,7 +22,7 @@ const ReviewSection: React.FC = () => {
 
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
 
-  const { data, error, isLoading } = useGetAllReviewsQuery({});
+  const { data, error, isLoading } = useGetAllReviewsQuery<any>({});
   const [createReview] = useCreateReviewMutation();
   const reviews: TReview[] = data?.data;
   // const dispatch = useAppDispatch();

@@ -28,10 +28,9 @@ const RegisterPage = () => {
       email,
       password,
       phone,
-      role: 'user',
       address,
     });
-    if (user.data.success) {
+    if (user?.data) {
       toast.success('User created successfully');
       navigate('/login');
     }

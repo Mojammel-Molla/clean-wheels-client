@@ -4,6 +4,7 @@ import { RootState } from '../redux/store';
 import { setEmail, setPassword } from '../redux/features/loginSlice';
 import { useLoginMutation } from '../redux/api/auth/authApi';
 import toast, { Toaster } from 'react-hot-toast';
+import { jwtDecode } from 'jwt-decode';
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -13,11 +14,24 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login logic here
-    const user = await login({ email, password });
-    if (user.data.success) {
-      toast.success('Login successfully');
-      console.log({ userInfo: email, password }, 'out put', user.data);
-      navigate('/');
+
+    try {
+      const userInfo = {
+        email: email,
+        password: password,
+      };
+      const res = await login(userInfo);
+
+      if (res?.data) {
+        const userData = jwtDecode(res?.data?.accessToken);
+
+        toast.success('Login successfully');
+        console.log('Token', userData, 'out put', res.data);
+        navigate('/');
+      }
+    } catch (err) {
+      toast.error('Invalid email or password');
+      console.error('Error:', err);
     }
   };
 

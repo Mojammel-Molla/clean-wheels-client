@@ -10,15 +10,14 @@ const bookingSlice = createSlice({
   name: 'booking',
   initialState,
   reducers: {
-    addBooking: (state, action) => {
-      state.services.push({ ...action.payload });
-
-      // Calculate total price directly in the reducer
-      state.totalPrice = state.services.reduce(
-        (total, service) => total + service.price * (service.quantity || 1),
-        0
-      );
-    },
+    // addBooking: (state, action) => {
+    //   state.services.push(action );
+    //   // Calculate total price directly in the reducer
+    //   state.totalPrice = state.services.reduce(
+    //     (total, service) => total + service.price * (service.quantity || 1),
+    //     0
+    //   );
+    // },
   },
 });
 
@@ -31,5 +30,5 @@ export const selectTotalPrice = (state: any) => {
   );
 };
 
-export const { addBooking } = bookingSlice.actions;
+// export const { addBooking } = bookingSlice.actions;
 export default bookingSlice.reducer;

@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-interface Booking {
-  _id: string;
-  service: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-}
+// interface TBooking {
+//   _id: string;
+//   service: string;
+//   date: string;
+//   startTime: string;
+//   endTime: string;
+//   status: string;
+// }
 
-interface BookingManagementProps {
-  bookings: Booking[];
-}
+// interface BookingManagementProps {
+//   bookings: TBooking[];
+// }
 
-const BookingManagement: React.FC<BookingManagementProps> = ({ bookings }) => {
+const BookingManagement: React.FC = () => {
   const [editedRole, setEditedRole] = useState<string>('');
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
@@ -40,7 +40,7 @@ const BookingManagement: React.FC<BookingManagementProps> = ({ bookings }) => {
           </tr>
         </thead>
         <tbody>
-          {bookings?.map(booking => (
+          {/* {bookings?.map(booking => (
             <tr key={booking._id}>
               <td className="px-4 py-2 border">{booking.service}</td>
               <td className="px-4 py-2 border">
@@ -50,7 +50,7 @@ const BookingManagement: React.FC<BookingManagementProps> = ({ bookings }) => {
               <td className="px-4 py-2 border">{booking.endTime}</td>
               <td className="px-4 py-2 border">{booking.status}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
 

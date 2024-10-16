@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useGetAllServicesQuery } from '../../redux/api/service/serviceApi';
 
 const ServicePage: React.FC = () => {
-  const { data, error, isLoading } = useGetAllServicesQuery(undefined);
+  const { data, error, isLoading } = useGetAllServicesQuery<any>(undefined);
   const services: TService[] = data?.data;
 
   // Search and sort states
